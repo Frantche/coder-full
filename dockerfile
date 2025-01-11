@@ -1,5 +1,5 @@
 # Base image
-FROM harbor.frantchenco.page/private-docker/ubuntu:plucky-20241213
+FROM harbor.frantchenco.page/private-docker/ubuntu:noble-20241118.1
 
 SHELL ["/bin/bash", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive
