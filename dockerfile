@@ -7,26 +7,34 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get upgrade --yes --no-install-recommends --no-install-suggests && \
     apt-get install --yes --no-install-recommends --no-install-suggests \
-    ca-certificates && \
-    rm -rf /var/lib/apt/lists/*
-COPY docker-archive-keyring.gpg /usr/share/keyrings/docker-archive-keyring.gpg
-COPY docker.list /etc/apt/sources.list.d/docker.list
+    ca-certificates curl && \
+    update-ca-certificates && \
+    sudo install -m 0755 -d /etc/apt/keyrings && \
+    add-apt-repository ppa:git-core/ppa && \
+    sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc && \
+    sudo chmod a+r /etc/apt/keyrings/docker.asc && \
+    echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null && \
+    sudo apt-get update && \
 
-# Install baseline packages
-RUN apt-get update && \
     apt-get install --yes --no-install-recommends --no-install-suggests \
     bash \
     build-essential \
+    ca-certificates \
     containerd.io \
-    curl \
     docker-ce \
     docker-ce-cli \
     docker-buildx-plugin \
     docker-compose-plugin \
+    git \
     htop \
+    iproute2 \
     jq \
     locales \
     man \
+    openssl \
     pipx \
     python3 \
     python3-pip \
@@ -38,10 +46,7 @@ RUN apt-get update && \
     vim \
     wget \
     rsync && \
-# Install latest Git using their official PPA
-    add-apt-repository ppa:git-core/ppa && \
-    apt-get install --yes git \
-    && rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/*
 
 # Enables Docker starting with systemd
 RUN systemctl enable docker
@@ -57,25 +62,7 @@ ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
 
-# Remove the `ubuntu` user and add a user `coder` so that you're not developing as the `root` user
-RUN userdel -r ubuntu && \
-    useradd coder \
-    --create-home \
-    --shell=/bin/bash \
-    --groups=docker \
-    --uid=1000 \
-    --user-group && \
-    echo "coder ALL=(ALL) NOPASSWD:ALL" >>/etc/sudoers.d/nopasswd
-
-USER coder
-RUN pipx ensurepath # adds user's bin directory to PATH
-
-
-USER root
-
-RUN apt-get update && \
-    apt-get install -y curl openssl ca-certificates iproute2 && \
-    update-ca-certificates
+RUN pipx ensurepath # adds users bin directory to PATH
 
 # install Hasura cli
 RUN curl --tlsv1.3 -L -o /usr/local/bin/hasura https://github.com/hasura/graphql-engine/releases/download/v2.45.1/cli-hasura-linux-amd64 && chmod +x /usr/local/bin/hasura
@@ -111,7 +98,17 @@ ENV CARGO_HOME=/home/coder/cargo
 ENV PATH $PATH:$CARGO_HOME/bin
 
 # Install Rust
-# RUN wget -O rustup-init https://sh.rustup.rs && chmod +x rustup-init && ./rustup-init -y && rm rustup-init
+RUN wget -O rustup-init https://sh.rustup.rs && chmod +x rustup-init && ./rustup-init -y && rm rustup-init
 
-# Set back to coder user
+
+# Remove the `ubuntu` user and add a user `coder` so that you're not developing as the `root` user
+RUN userdel -r ubuntu && \
+    useradd coder \
+    --create-home \
+    --shell=/bin/bash \
+    --groups=docker \
+    --uid=1000 \
+    --user-group && \
+    echo "coder ALL=(ALL) NOPASSWD:ALL" >>/etc/sudoers.d/nopasswd
+
 USER coder
