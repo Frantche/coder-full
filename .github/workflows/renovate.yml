@@ -5,7 +5,9 @@ on:
   schedule:
     - cron: "0 2 * * *" # Exécution quotidienne à 2h du matin
 
-permissions: read-all
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
   renovate:
@@ -13,14 +15,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Étape 1 : Configuration de Renovate
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
       - name: Run Renovate
         uses: renovatebot/github-action@v41.0.7
         with:
           args: --repositories=Frantche/coder-full
         env:
-          # Nécessaire pour authentifier Renovate
           RENOVATE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LOG_LEVEL: debug
