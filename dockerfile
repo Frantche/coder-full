@@ -9,16 +9,15 @@ RUN apt-get update && \
     apt-get install --yes --no-install-recommends --no-install-suggests \
     ca-certificates curl && \
     update-ca-certificates && \
-    sudo install -m 0755 -d /etc/apt/keyrings && \
+    install -m 0755 -d /etc/apt/keyrings && \
     add-apt-repository ppa:git-core/ppa && \
-    sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc && \
-    sudo chmod a+r /etc/apt/keyrings/docker.asc && \
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc && \
+    chmod a+r /etc/apt/keyrings/docker.asc && \
     echo \
     "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
     $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null && \
-    sudo apt-get update && \
-
+    tee /etc/apt/sources.list.d/docker.list > /dev/null && \
+    apt-get update && \
     apt-get install --yes --no-install-recommends --no-install-suggests \
     bash \
     build-essential \
