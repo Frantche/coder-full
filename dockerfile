@@ -7,7 +7,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Define versions as arguments for easy updates
 ARG DOCKER_CE_VERSION=5:27.4.1-1~ubuntu.24.04~noble
 ARG HASURA_CLI_VERSION=2.45.1
-ARG NODE_VERSION=18.17.1
+ARG NODE_VERSION=23.6.0
 ARG NVM_VERSION=0.40.1
 ARG YARN_VERSION=1.22.19
 ARG GO_VERSION=1.21.4
@@ -71,9 +71,7 @@ RUN curl -L -o /usr/local/bin/hasura "https://github.com/hasura/graphql-engine/r
 # Install Node.js via NVM
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v${NVM_VERSION}/install.sh | bash && \
     source ~/.bashrc && \
-    nvm install ${NODE_VERSION}
-
-RUN  nvm alias default ${NODE_VERSION}
+    nvm install v${NODE_VERSION}
 
 # Install Yarn
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor -o /etc/apt/keyrings/yarn.gpg && \
