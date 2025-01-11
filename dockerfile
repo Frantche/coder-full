@@ -71,7 +71,7 @@ RUN curl -L -o /usr/local/bin/hasura "https://github.com/hasura/graphql-engine/r
 # Install Node.js via NVM
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v${NVM_VERSION}/install.sh | bash && \
     source ~/.bashrc && \
-    nvm install v${NODE_VERSION}
+    nvm install "v${NODE_VERSION}"
 
 # Install Yarn
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor -o /etc/apt/keyrings/yarn.gpg && \
