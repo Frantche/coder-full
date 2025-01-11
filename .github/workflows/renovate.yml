@@ -20,6 +20,7 @@ jobs:
         with:
           # Activer les logs avancés pour le débogage
           logLevel: debug
+          args: --autodiscover
         env:
           # Nécessaire pour authentifier Renovate
           RENOVATE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
