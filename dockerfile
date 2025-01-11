@@ -68,9 +68,20 @@ ENV LC_ALL=en_US.UTF-8
 RUN curl -L -o /usr/local/bin/hasura "https://github.com/hasura/graphql-engine/releases/download/v${HASURA_CLI_VERSION}/cli-hasura-linux-amd64" && \
     chmod +x /usr/local/bin/hasura
 
-# Install Node.js via NVM
+# Installer nvm et Node.js
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v${NVM_VERSION}/install.sh | bash && \
-    nvm install "v${NODE_VERSION}"
+    export NVM_DIR="/root/.nvm" && \
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" && \
+    nvm install v${NODE_VERSION} && \
+    nvm use v${NODE_VERSION} && \
+    nvm alias default v${NODE_VERSION}
+
+# Ajouter nvm au PATH
+ENV NVM_DIR="/root/.nvm"
+ENV PATH="$NVM_DIR/versions/node/v${NODE_VERSION}/bin:$PATH"
+
+# Vérifier l'installation
+RUN node --version && npm --version
 
 # Install Yarn
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor -o /etc/apt/keyrings/yarn.gpg && \
