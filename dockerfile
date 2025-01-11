@@ -13,79 +13,70 @@ ARG YARN_VERSION=1.22.19
 ARG GO_VERSION=1.21.4
 ARG RUSTUP_VERSION=1.26.0
 
-# Install the Docker apt repository
+# Install dependencies and Docker
 RUN apt-get update && \
-    apt-get upgrade --yes --no-install-recommends --no-install-suggests && \
-    apt-get install --yes --no-install-recommends --no-install-suggests \
-    ca-certificates curl software-properties-common && \
+    apt-get upgrade -y --no-install-recommends && \
+    apt-get install -y --no-install-recommends \
+        ca-certificates \
+        curl \
+        gnupg \
+        software-properties-common \
+        lsb-release \
+        bash \
+        build-essential \
+        git \
+        htop \
+        iproute2 \
+        jq \
+        locales \
+        man \
+        openssl \
+        python3 \
+        python3-pip \
+        sudo \
+        systemd \
+        unzip \
+        vim \
+        wget \
+        rsync && \
     update-ca-certificates && \
-    install -m 0755 -d /etc/apt/keyrings && \
-    add-apt-repository ppa:git-core/ppa && \
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc && \
-    chmod a+r /etc/apt/keyrings/docker.asc && \
-    echo \
-    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-    tee /etc/apt/sources.list.d/docker.list > /dev/null && \
+    mkdir -p /etc/apt/keyrings && \
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg && \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list && \
     apt-get update && \
-    apt-get install --yes --no-install-recommends --no-install-suggests \
-    bash \
-    build-essential \
-    ca-certificates \
-    containerd.io \
-    docker-ce=$DOCKER_CE_VERSION* \
-    docker-ce-cli=$DOCKER_CE_VERSION* \
-    docker-buildx-plugin \
-    docker-compose-plugin \
-    git \
-    htop \
-    iproute2 \
-    jq \
-    locales \
-    man \
-    openssl \
-    pipx \
-    python3 \
-    python3-pip \
-    sudo \
-    systemd \
-    systemd-sysv \
-    unzip \
-    vim \
-    wget \
-    rsync && \
+    apt-get install -y --no-install-recommends \
+        containerd.io \
+        docker-ce=$DOCKER_CE_VERSION* \
+        docker-ce-cli=$DOCKER_CE_VERSION* \
+        docker-buildx-plugin \
+        docker-compose-plugin && \
+    ln -s /usr/libexec/docker/cli-plugins/docker-compose /usr/bin/docker-compose && \
+    locale-gen en_US.UTF-8 && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Enables Docker starting with systemd
-RUN systemctl enable docker
-
-# Create a symlink for standalone docker-compose usage
-RUN ln -s /usr/libexec/docker/cli-plugins/docker-compose /usr/bin/docker-compose
-
-# Generate the desired locale (en_US.UTF-8)
-RUN locale-gen en_US.UTF-8
-
-# Make typing unicode characters in the terminal work
+# Locale settings
 ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
 
-RUN pipx ensurepath # adds users bin directory to PATH
-
 # Install Hasura CLI
-RUN curl --tlsv1.3 -L -o /usr/local/bin/hasura https://github.com/hasura/graphql-engine/releases/download/v${HASURA_CLI_VERSION}/cli-hasura-linux-amd64 && \
+RUN curl -L -o /usr/local/bin/hasura "https://github.com/hasura/graphql-engine/releases/download/v${HASURA_CLI_VERSION}/cli-hasura-linux-amd64" && \
     chmod +x /usr/local/bin/hasura
 
 # Install Node.js via NVM
-RUN curl --tlsv1.3 -o- https://raw.githubusercontent.com/nvm-sh/nvm/v${NVM_VERSION}/install.sh | bash && \
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v${NVM_VERSION}/install.sh | bash && \
     source ~/.bashrc && \
     nvm install ${NODE_VERSION} && \
     nvm alias default ${NODE_VERSION}
 
 # Install Yarn
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-RUN apt-get update && apt-get install -y yarn=${YARN_VERSION}-1
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor -o /etc/apt/keyrings/yarn.gpg && \
+    echo "deb [signed-by=/etc/apt/keyrings/yarn.gpg] https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+    apt-get update && \
+    apt-get install -y yarn=${YARN_VERSION}-1 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install Go
 RUN curl -L -o go${GO_VERSION}.linux-amd64.tar.gz "https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz" && \
@@ -93,21 +84,24 @@ RUN curl -L -o go${GO_VERSION}.linux-amd64.tar.gz "https://go.dev/dl/go${GO_VERS
     rm go${GO_VERSION}.linux-amd64.tar.gz
 
 # Setup Go environment variables
-ENV GOROOT /usr/local/go
-ENV PATH $PATH:$GOROOT/bin
-ENV GOPATH /home/coder/go
-ENV GOBIN $GOPATH/bin
-ENV PATH $PATH:$GOBIN
-
-# Set Rust environment variables
-ENV RUSTUP_HOME=/home/coder/rustup
-ENV CARGO_HOME=/home/coder/cargo
-ENV PATH $PATH:$CARGO_HOME/bin
+ENV GOROOT=/usr/local/go
+ENV PATH=$PATH:$GOROOT/bin
+ENV GOPATH=/home/coder/go
+ENV GOBIN=$GOPATH/bin
+ENV PATH=$PATH:$GOBIN
 
 # Install Rust
-RUN wget -O rustup-init https://sh.rustup.rs && chmod +x rustup-init && ./rustup-init -y --default-toolchain ${RUSTUP_VERSION} && rm rustup-init
+RUN wget -O rustup-init https://sh.rustup.rs && \
+    chmod +x rustup-init && \
+    ./rustup-init -y --default-toolchain ${RUSTUP_VERSION} && \
+    rm rustup-init
 
-# Remove the `ubuntu` user and add a user `coder` so that you're not developing as the `root` user
+# Rust environment variables
+ENV RUSTUP_HOME=/home/coder/rustup
+ENV CARGO_HOME=/home/coder/cargo
+ENV PATH=$PATH:$CARGO_HOME/bin
+
+# Create a non-root user "coder"
 RUN userdel -r ubuntu && \
     useradd coder \
     --create-home \
@@ -115,6 +109,7 @@ RUN userdel -r ubuntu && \
     --groups=docker \
     --uid=1000 \
     --user-group && \
-    echo "coder ALL=(ALL) NOPASSWD:ALL" >>/etc/sudoers.d/nopasswd
+    echo "coder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
 
+# Switch to non-root user
 USER coder
