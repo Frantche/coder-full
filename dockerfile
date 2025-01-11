@@ -38,6 +38,7 @@ RUN apt-get update && \
         unzip \
         vim \
         wget \
+        ssh \
         rsync && \
     update-ca-certificates && \
     install -m 0755 -d /etc/apt/keyrings && \
