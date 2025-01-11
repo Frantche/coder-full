@@ -1,4 +1,4 @@
-FROM harbor.frantchenco.page/private-docker/ubuntu:noble
+FROM harbor.frantchenco.page/private-docker/ubuntu:plucky-20241213
 
 SHELL ["/bin/bash", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive
@@ -7,7 +7,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get upgrade --yes --no-install-recommends --no-install-suggests && \
     apt-get install --yes --no-install-recommends --no-install-suggests \
-    ca-certificates curl && \
+    ca-certificates curl software-properties-common && \
     update-ca-certificates && \
     install -m 0755 -d /etc/apt/keyrings && \
     add-apt-repository ppa:git-core/ppa && \
@@ -37,7 +37,6 @@ RUN apt-get update && \
     pipx \
     python3 \
     python3-pip \
-    software-properties-common \
     sudo \
     systemd \
     systemd-sysv \
