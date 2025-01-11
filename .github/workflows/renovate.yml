@@ -16,11 +16,11 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Run Renovate
-        uses: renovatebot/github-action@v38.1.0
+        uses: renovatebot/github-action@v41.0.7
         with:
           # Activer les logs avancés pour le débogage
           logLevel: debug
           args: --autodiscover
         env:
           # Nécessaire pour authentifier Renovate
-          RENOVATE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
