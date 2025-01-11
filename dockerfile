@@ -5,7 +5,7 @@ SHELL ["/bin/bash", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Define versions as arguments for easy updates
-ARG DOCKER_CE_VERSION=24.0.5
+ARG DOCKER_CE_VERSION=5:27.4.1-1~ubuntu.24.04~noble
 ARG HASURA_CLI_VERSION=2.45.1
 ARG NODE_VERSION=18.17.1
 ARG NVM_VERSION=0.39.3
@@ -51,8 +51,8 @@ RUN apt-get update && \
     apt-cache madison docker-ce | awk '{ print $3 }' && \
     apt-get install -y --no-install-recommends \
         containerd.io \
-        docker-ce=$DOCKER_CE_VERSION* \
-        docker-ce-cli=$DOCKER_CE_VERSION* \
+        docker-ce=$DOCKER_CE_VERSION \
+        docker-ce-cli=$DOCKER_CE_VERSION \
         docker-buildx-plugin \
         docker-compose-plugin && \
     ln -s /usr/libexec/docker/cli-plugins/docker-compose /usr/bin/docker-compose && \
