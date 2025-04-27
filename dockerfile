@@ -13,17 +13,6 @@ ARG YARN_VERSION=1.22.19
 ARG GO_VERSION=1.21.4
 ARG RUSTUP_VERSION=1.26.0
 
-# Install Helm
-RUN curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-
-# Install k9s
-RUN wget -qO-  https://github.com/derailed/k9s/releases/download/v0.50.4/k9s_Linux_amd64.tar.gz | tar -xz && \
-    install -o root -g root -m 0755 k9s /usr/local/bin/k9s
-
-# Install Kubectl
-RUN wget -qO kubectl "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
-    sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl 
-
 # Install dependencies and Docker
 RUN apt-get update && \
     apt-get upgrade -y --no-install-recommends && \
@@ -70,6 +59,17 @@ RUN apt-get update && \
     ln -s /usr/libexec/docker/cli-plugins/docker-compose /usr/bin/docker-compose && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+# Install Helm
+RUN curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+# Install k9s
+RUN wget -qO-  https://github.com/derailed/k9s/releases/download/v0.50.4/k9s_Linux_amd64.tar.gz | tar -xz && \
+    install -o root -g root -m 0755 k9s /usr/local/bin/k9s
+
+# Install Kubectl
+RUN wget -qO kubectl "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
+    sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl 
 
 # Locale settings
 ENV LANG=en_US.UTF-8
