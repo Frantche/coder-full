@@ -8,10 +8,10 @@ ENV DEBIAN_FRONTEND=noninteractive
 ARG DOCKER_CE_VERSION=5:27.4.1-1~ubuntu.24.04~noble
 ARG HASURA_CLI_VERSION=2.45.1
 ARG NODE_VERSION=23.6.0
-ARG NVM_VERSION=0.40.1
-ARG YARN_VERSION=1.22.19
-ARG GO_VERSION=1.21.4
-ARG RUSTUP_VERSION=1.26.0
+ARG NVM_VERSION=0.40.3
+ARG YARN_VERSION=1.22.22
+ARG GO_VERSION=1.24.3
+ARG RUSTUP_VERSION=1.28.2
 
 # Install dependencies and Docker
 RUN apt-get update && \
@@ -69,7 +69,11 @@ RUN wget -qO-  https://github.com/derailed/k9s/releases/download/v0.50.4/k9s_Lin
 
 # Install Kubectl
 RUN wget -qO kubectl "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
-    sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl 
+    install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl 
+
+# install get-next-version
+RUN curl -L -o get-next-version https://github.com/thenativeweb/get-next-version/releases/download/2.6.3/get-next-version-linux-amd64  && \
+    install -o root -g root -m 0755 get-next-version /usr/local/bin/get-next-version
 
 # Locale settings
 ENV LANG=en_US.UTF-8
