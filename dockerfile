@@ -1,5 +1,5 @@
 # Base image
-FROM harbor.frantchenco.page/private-docker/ubuntu:noble-20241118.1
+FROM mirror.gcr.io/ubuntu:noble-20241118.1
 
 SHELL ["/bin/bash", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive
