@@ -11,7 +11,7 @@ ARG NODE_VERSION=23.6.0
 ARG NVM_VERSION=0.40.3
 ARG YARN_VERSION=1.22.22
 ARG GO_VERSION=1.24.3
-ARG RUSTUP_VERSION=1.28.2
+
 
 # Install dependencies and Docker
 RUN apt-get update && \
@@ -118,17 +118,6 @@ ENV PATH=$PATH:$GOROOT/bin
 ENV GOPATH=/home/coder/go
 ENV GOBIN=$GOPATH/bin
 ENV PATH=$PATH:$GOBIN
-
-# Install Rust
-RUN wget -O rustup-init https://sh.rustup.rs && \
-    chmod +x rustup-init && \
-    ./rustup-init -y --default-toolchain ${RUSTUP_VERSION} && \
-    rm rustup-init
-
-# Rust environment variables
-ENV RUSTUP_HOME=/home/coder/rustup
-ENV CARGO_HOME=/home/coder/cargo
-ENV PATH=$PATH:$CARGO_HOME/bin
 
 # Create a non-root user "coder"
 RUN userdel -r ubuntu && \
