@@ -4,14 +4,26 @@ FROM mirror.gcr.io/ubuntu:noble-20250404
 SHELL ["/bin/bash", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Define versions as arguments for easy updates
+# renovate: datasource=docker versions=apt
 ARG DOCKER_CE_VERSION=5:27.4.1-1~ubuntu.24.04~noble
+# renovate: datasource=github-releases depName=hasura/graphql-engine
 ARG HASURA_CLI_VERSION=2.45.1
+# renovate: datasource=github-releases depName=nodejs/node
 ARG NODE_VERSION=23.6.0
+# renovate: datasource=github-releases depName=nvm-sh/nvm
 ARG NVM_VERSION=0.40.3
+# renovate: datasource=github-releases depName=yarnpkg/yarn
 ARG YARN_VERSION=1.22.22
+# renovate: datasource=github-releases depName=golang/go
 ARG GO_VERSION=1.24.3
+# renovate: datasource=github-releases depName=derailed/k9s
 ARG K9S_VERSION=0.50.5
+# renovate: datasource=github-releases depName=helm/helm
+ARG HELM_VERSION=3.15.0
+# renovate: datasource=github-tags depName=kubernetes/kubernetes
+ARG KUBECTL_VERSION=1.30.1
+# renovate: datasource=github-releases depName=thenativeweb/get-next-version
+ARG GNV_VERSION=2.6.3
 
 # Install dependencies and Docker
 RUN apt-get update && \
@@ -61,19 +73,27 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Helm
-RUN curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+RUN curl -fsSL -o helm.tar.gz https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
+    tar -xzf helm.tar.gz && \
+    mv linux-amd64/helm /usr/local/bin/helm && \
+    chmod +x /usr/local/bin/helm && \
+    rm -rf helm.tar.gz linux-amd64
 
 # Install k9s
 RUN wget -qO-  "https://github.com/derailed/k9s/releases/download/v${K9S_VERSION}/k9s_Linux_amd64.tar.gz" | tar -xz && \
     install -o root -g root -m 0755 k9s /usr/local/bin/k9s
 
 # Install Kubectl
-RUN wget -qO kubectl "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
-    install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl 
+ARG KUBECTL_VERSION=1.30.1
+RUN curl -LO "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl" && \
+    install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl && \
+    rm kubectl
 
 # install get-next-version
-RUN curl -L -o get-next-version https://github.com/thenativeweb/get-next-version/releases/download/2.6.3/get-next-version-linux-amd64  && \
-    install -o root -g root -m 0755 get-next-version /usr/local/bin/get-next-version
+ARG GNV_VERSION=2.6.3
+RUN curl -L -o get-next-version https://github.com/thenativeweb/get-next-version/releases/download/${GNV_VERSION}/get-next-version-linux-amd64 && \
+    install -o root -g root -m 0755 get-next-version /usr/local/bin/get-next-version && \
+    rm get-next-version
 
 # Locale settings
 ENV LANG=en_US.UTF-8
