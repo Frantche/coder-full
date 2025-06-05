@@ -8,7 +8,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 ARG DOCKER_CE_VERSION=5:27.4.1-1~ubuntu.24.04~noble
 
 # renovate: datasource=github-releases depName=graphql-engine packageName=hasura/graphql-engine versioning=semver
-ARG HASURA_CLI_VERSION=2.48.1
+ARG HASURA_CLI_VERSION=2.45.1
 
 # renovate: datasource=github-releases depName=node packageName=nodejs/node versioning=semver
 ARG NODE_VERSION=23.6.0
@@ -23,7 +23,7 @@ ARG YARN_VERSION=1.22.22
 ARG GO_VERSION=1.24.3
 
 # renovate: datasource=github-releases depName=k9s packageName=derailed/k9s versioning=semver
-ARG K9S_VERSION=0.50.6
+ARG K9S_VERSION=0.50.5
 
 # renovate: datasource=github-releases depName=helm packageName=helm/helm versioning=semver
 ARG HELM_VERSION=3.15.0
@@ -147,6 +147,14 @@ ENV PATH=$PATH:$GOROOT/bin
 ENV GOPATH=/home/coder/go
 ENV GOBIN=$GOPATH/bin
 ENV PATH=$PATH:$GOBIN
+
+# Generate the desired locale (en_US.UTF-8)
+RUN locale-gen en_US.UTF-8
+
+# Make typing unicode characters in the terminal work.
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
 
 # Create a non-root user "coder"
 RUN userdel -r ubuntu && \
