@@ -4,25 +4,34 @@ FROM mirror.gcr.io/ubuntu:noble-20250404
 SHELL ["/bin/bash", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive
 
-# renovate: datasource=docker versions=apt
+# renovate: datasource=apt depName=docker-ce packageName=docker-ce versioning=loose
 ARG DOCKER_CE_VERSION=5:27.4.1-1~ubuntu.24.04~noble
-# renovate: datasource=github-releases depName=hasura/graphql-engine
+
+# renovate: datasource=github-releases depName=graphql-engine packageName=hasura/graphql-engine versioning=semver
 ARG HASURA_CLI_VERSION=2.45.1
-# renovate: datasource=github-releases depName=nodejs/node
+
+# renovate: datasource=github-releases depName=node packageName=nodejs/node versioning=semver
 ARG NODE_VERSION=23.6.0
-# renovate: datasource=github-releases depName=nvm-sh/nvm
+
+# renovate: datasource=github-releases depName=nvm packageName=nvm-sh/nvm versioning=semver
 ARG NVM_VERSION=0.40.3
-# renovate: datasource=github-releases depName=yarnpkg/yarn
+
+# renovate: datasource=github-releases depName=yarn packageName=yarnpkg/yarn versioning=semver
 ARG YARN_VERSION=1.22.22
-# renovate: datasource=github-releases depName=golang/go
+
+# renovate: datasource=github-releases depName=go packageName=golang/go versioning=semver
 ARG GO_VERSION=1.24.3
-# renovate: datasource=github-releases depName=derailed/k9s
+
+# renovate: datasource=github-releases depName=k9s packageName=derailed/k9s versioning=semver
 ARG K9S_VERSION=0.50.5
-# renovate: datasource=github-releases depName=helm/helm
+
+# renovate: datasource=github-releases depName=helm packageName=helm/helm versioning=semver
 ARG HELM_VERSION=3.15.0
-# renovate: datasource=github-tags depName=kubernetes/kubernetes
+
+# renovate: datasource=github-tags depName=kubernetes packageName=kubernetes/kubernetes versioning=semver
 ARG KUBECTL_VERSION=1.30.1
-# renovate: datasource=github-releases depName=thenativeweb/get-next-version
+
+# renovate: datasource=github-releases depName=get-next-version packageName=thenativeweb/get-next-version versioning=semver
 ARG GNV_VERSION=2.6.3
 
 # Install dependencies and Docker
