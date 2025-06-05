@@ -11,7 +11,7 @@ ARG NODE_VERSION=23.6.0
 ARG NVM_VERSION=0.40.3
 ARG YARN_VERSION=1.22.22
 ARG GO_VERSION=1.24.3
-
+ARG K9S_VERSION=0.50.5
 
 # Install dependencies and Docker
 RUN apt-get update && \
@@ -64,7 +64,7 @@ RUN apt-get update && \
 RUN curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
 # Install k9s
-RUN wget -qO-  https://github.com/derailed/k9s/releases/download/v0.50.4/k9s_Linux_amd64.tar.gz | tar -xz && \
+RUN wget -qO-  "https://github.com/derailed/k9s/releases/download/v${K9S_VERSION}/k9s_Linux_amd64.tar.gz" | tar -xz && \
     install -o root -g root -m 0755 k9s /usr/local/bin/k9s
 
 # Install Kubectl
