@@ -23,7 +23,7 @@ ARG YARN_VERSION=1.22.22
 ARG GO_VERSION=1.24.3
 
 # renovate: datasource=github-releases depName=k9s packageName=derailed/k9s versioning=semver
-ARG K9S_VERSION=0.50.5
+ARG K9S_VERSION=0.50.6
 
 # renovate: datasource=github-releases depName=helm packageName=helm/helm versioning=semver
 ARG HELM_VERSION=3.15.0
