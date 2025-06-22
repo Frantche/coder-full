@@ -26,7 +26,7 @@ ARG GO_VERSION=1.24.3
 ARG K9S_VERSION=0.50.6
 
 # renovate: datasource=github-releases depName=helm packageName=helm/helm versioning=semver
-ARG HELM_VERSION=3.18.2
+ARG HELM_VERSION=3.18.3
 
 # renovate: datasource=github-tags depName=kubernetes packageName=kubernetes/kubernetes versioning=semver
 ARG KUBECTL_VERSION=1.33.1
