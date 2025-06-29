@@ -32,7 +32,7 @@ ARG HELM_VERSION=3.18.3
 ARG KUBECTL_VERSION=1.33.2
 
 # renovate: datasource=github-releases depName=get-next-version packageName=thenativeweb/get-next-version versioning=semver
-ARG GNV_VERSION=2.6.3
+ARG GNV_VERSION=2.7.1
 
 # Install dependencies and Docker
 RUN apt-get update && \
