@@ -3,7 +3,7 @@ commandTests:
   - name: "Docker Version"
     command: "docker"
     args: ["version", "-f", "{{.Client.Version}}"]
-    expectedOutput: ["^${DOCKER_VERSION}$""]
+    expectedOutput: ["^${DOCKER_VERSION}$"]
 
   - name: "Helm Version"
     command: "helm"
