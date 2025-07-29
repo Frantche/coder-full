@@ -32,6 +32,11 @@ jobs:
         run: |
           awk '/^ARG / { split($2, kv, "="); printf("%s=%s\n", kv[1], kv[2]) }' dockerfile > versions.env
 
+          # Extract docker version
+          source versions.env
+          docker_short=$(echo "$DOCKER_CE_VERSION" | sed 's/.*:\([^:-]*\).*/\1/')
+          echo "DOCKER_VERSION=${docker_short}" >> versions.env
+
       - name: Install Container Structure Test
         run: |
           curl -LO https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64
