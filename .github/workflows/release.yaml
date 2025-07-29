@@ -30,7 +30,7 @@ jobs:
 
       - name: Extract ARGs from Dockerfile
         run: |
-          awk '/^ARG / { split($2, kv, "="); printf("%s=%s\n", kv[1], kv[2]) }' Dockerfile > versions.env
+          awk '/^ARG / { split($2, kv, "="); printf("%s=%s\n", kv[1], kv[2]) }' dockerfile > versions.env
 
       - name: Install Container Structure Test
         run: |
