@@ -1,0 +1,48 @@
+schemaVersion: "2.0.0"
+commandTests:
+  - name: "Docker Version"
+    command: "docker"
+    args: ["version", "-f", "{{.Client.Version}}"]
+    expectedOutput: ["${DOCKER_VERSION}"]
+    expectedError: [".*Is the docker daemon running?.*"]
+    exitCode: 1
+
+  - name: "Helm Version"
+    command: "helm"
+    args: ["version", "--short"]
+    expectedOutput: ["v${HELM_VERSION}"]
+
+  - name: "k9s Version"
+    command: "k9s"
+    args: ["version", "-s"]
+    expectedOutput: ["Version.*v${K9S_VERSION}"]
+
+  - name: "Kubectl Version"
+    command: "kubectl"
+    args: ["version", "--client=true"]
+    expectedOutput: ["Client Version: v${KUBECTL_VERSION}"]
+
+#  - name: "Get-Next-Version"
+#    command: "get-next-version"
+#    args: ["version"]
+#    expectedOutput: ["${GNV_VERSION}"]
+
+  - name: "Hasura CLI Version"
+    command: "hasura"
+    args: ["version"]
+    expectedOutput: ["v${HASURA_CLI_VERSION}"]
+
+  - name: "Node Version"
+    command: "node"
+    args: ["--version"]
+    expectedOutput: ["v${NODE_VERSION}"]
+
+  - name: "Yarn Version"
+    command: "yarn"
+    args: ["--version"]
+    expectedOutput: ["${YARN_VERSION}"]
+
+  - name: "Go Version"
+    command: "go"
+    args: ["version"]
+    expectedOutput: ["go${GO_VERSION}"]
