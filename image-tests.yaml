@@ -22,7 +22,7 @@ commandTests:
 
 #  - name: "Get-Next-Version"
 #    command: "get-next-version"
-#    args: ["--version"]
+#    args: ["version"]
 #    expectedOutput: ["${GNV_VERSION}"]
 
   - name: "Hasura CLI Version"
