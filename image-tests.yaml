@@ -4,6 +4,7 @@ commandTests:
     command: "docker"
     args: ["version", "-f", "{{.Client.Version}}"]
     expectedOutput: ["${DOCKER_VERSION}"]
+    expectedError: [".*Cannot connect to the Docker daemon at unix:///var/run/docker.sock.*"]
 
   - name: "Helm Version"
     command: "helm"
