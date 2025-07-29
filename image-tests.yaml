@@ -2,8 +2,8 @@ schemaVersion: "2.0.0"
 commandTests:
   - name: "Docker Version"
     command: "docker"
-    args: ["--version"]
-    expectedOutput: ["${DOCKER_CE_VERSION%%-*}"]
+    args: ["version", "-f", "strict-validate-path-type=false"]
+    expectedOutput: ["${DOCKER_CE_VERSION}"]
 
   - name: "Helm Version"
     command: "helm"
@@ -12,13 +12,13 @@ commandTests:
 
   - name: "k9s Version"
     command: "k9s"
-    args: ["version"]
-    expectedOutput: ["Version: ${K9S_VERSION}"]
+    args: ["version", "-s"]
+    expectedOutput: ["Version: v${K9S_VERSION}"]
 
   - name: "Kubectl Version"
     command: "kubectl"
-    args: ["version", "--client", "--short"]
-    expectedOutput: ["v${KUBECTL_VERSION}"]
+    args: ["version", "--client=true"]
+    expectedOutput: ["Client Version: v${KUBECTL_VERSION}"]
 
   - name: "Get-Next-Version"
     command: "get-next-version"
