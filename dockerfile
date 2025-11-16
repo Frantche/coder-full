@@ -93,13 +93,11 @@ RUN wget -qO-  "https://github.com/derailed/k9s/releases/download/v${K9S_VERSION
     install -o root -g root -m 0755 k9s /usr/local/bin/k9s
 
 # Install Kubectl
-ARG KUBECTL_VERSION=1.30.1
 RUN curl -LO "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl" && \
     install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl && \
     rm kubectl
 
 # install get-next-version
-ARG GNV_VERSION=2.6.3
 RUN curl -L -o get-next-version https://github.com/thenativeweb/get-next-version/releases/download/${GNV_VERSION}/get-next-version-linux-amd64 && \
     install -o root -g root -m 0755 get-next-version /usr/local/bin/get-next-version && \
     rm get-next-version
