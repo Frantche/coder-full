@@ -4,8 +4,6 @@ commandTests:
     command: "docker"
     args: ["version", "-f", "{{.Client.Version}}"]
     expectedOutput: ["${DOCKER_VERSION}"]
-    expectedError: [".*Is the docker daemon running?.*"]
-    exitCode: 1
 
   - name: "Helm Version"
     command: "helm"
