@@ -9,11 +9,13 @@ start_docker() {
     sudo mkdir -p /var/log
     
     # Start Docker daemon in the background with proper settings
-    sudo dockerd --host=unix:///var/run/docker.sock > /var/log/dockerd.log 2>&1 &
+    # Use a subshell with sudo for proper redirection
+    (sudo dockerd --host=unix:///var/run/docker.sock 2>&1 | sudo tee /var/log/dockerd.log > /dev/null) &
     
     # Wait for Docker daemon to be ready
     echo "Waiting for Docker daemon to start..."
-    for i in {1..30}; do
+    local max_attempts=30
+    for ((i=1; i<=max_attempts; i++)); do
         if docker info > /dev/null 2>&1; then
             echo "Docker daemon is ready!"
             return 0
@@ -21,9 +23,9 @@ start_docker() {
         sleep 1
     done
     
-    echo "Docker daemon failed to start within 30 seconds"
+    echo "Docker daemon failed to start within ${max_attempts} seconds"
     echo "Docker daemon logs:"
-    cat /var/log/dockerd.log
+    sudo cat /var/log/dockerd.log
     return 1
 }
 
