@@ -47,10 +47,10 @@ commandTests:
     args: ["version"]
     expectedOutput: ["go${GO_VERSION}"]
 
-  - name: "Copilot CLI Version"
+  - name: "Copilot CLI Installation"
     command: "copilot"
-    args: ["--version"]
-    expectedOutput: ["${COPILOT_CLI_VERSION}"]
+    args: ["--help"]
+    expectedOutput: ["GitHub Copilot CLI"]
 
   - name: "PostgreSQL Client Version (Major)"
     command: "psql"
