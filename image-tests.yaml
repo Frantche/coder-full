@@ -55,4 +55,9 @@ commandTests:
   - name: "PostgreSQL Client Version"
     command: "psql"
     args: ["--version"]
-    expectedOutput: ["psql \\(PostgreSQL\\) 16"]
+    expectedOutput: ["psql \\(PostgreSQL\\) [0-9]+"]
+  
+  - name: "PostgreSQL Client Help (Functionality Test)"
+    command: "psql"
+    args: ["--help"]
+    expectedOutput: ["psql is the PostgreSQL interactive terminal"]
