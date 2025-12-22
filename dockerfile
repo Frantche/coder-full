@@ -82,9 +82,15 @@ RUN apt-get update && \
         docker-ce=$DOCKER_CE_VERSION \
         docker-ce-cli=$DOCKER_CE_VERSION \
         docker-buildx-plugin \
-        docker-compose-plugin \
-        postgresql-client=$POSTGRESQL_CLIENT_VERSION && \
+        docker-compose-plugin && \
     ln -s /usr/libexec/docker/cli-plugins/docker-compose /usr/bin/docker-compose && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install PostgreSQL client
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        postgresql-client=$POSTGRESQL_CLIENT_VERSION && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
