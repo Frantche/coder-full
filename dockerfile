@@ -13,9 +13,6 @@ ARG HASURA_CLI_VERSION=2.48.6
 # renovate: datasource=github-releases depName=node packageName=nodejs/node versioning=semver
 ARG NODE_VERSION=25.2.1
 
-# renovate: datasource=github-releases depName=nvm packageName=nvm-sh/nvm versioning=semver
-ARG NVM_VERSION=0.40.3
-
 # renovate: datasource=github-releases depName=yarn packageName=yarnpkg/yarn versioning=semver
 ARG YARN_VERSION=1.22.22
 
@@ -33,6 +30,12 @@ ARG KUBECTL_VERSION=1.35.0
 
 # renovate: datasource=github-releases depName=get-next-version packageName=thenativeweb/get-next-version versioning=semver
 ARG GNV_VERSION=2.7.1
+
+# renovate: datasource=npm depName=@github/copilot packageName=@github/copilot versioning=semver
+ARG COPILOT_CLI_VERSION=0.0.372
+
+# renovate: datasource=github-tags depName=postgresql packageName=postgres/postgres versioning=semver
+ARG POSTGRESQL_VERSION=18.1
 
 # Install dependencies and Docker
 RUN apt-get update && \
@@ -81,6 +84,16 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# Install PostgreSQL client from official PostgreSQL repository
+RUN apt-get update && \
+    install -d /usr/share/postgresql-common/pgdg && \
+    curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc --fail https://www.postgresql.org/media/keys/ACCC4CF8.asc && \
+    echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends postgresql-client-$(echo ${POSTGRESQL_VERSION} | cut -d. -f1) && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 # Install Helm
 RUN curl -fsSL -o helm.tar.gz https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
     tar -xzf helm.tar.gz && \
@@ -111,20 +124,15 @@ ENV LC_ALL=en_US.UTF-8
 RUN curl -L -o /usr/local/bin/hasura "https://github.com/hasura/graphql-engine/releases/download/v${HASURA_CLI_VERSION}/cli-hasura-linux-amd64" && \
     chmod +x /usr/local/bin/hasura
 
-# Installer nvm et Node.js
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v${NVM_VERSION}/install.sh | bash && \
-    export NVM_DIR="/root/.nvm" && \
-    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" && \
-    nvm install v${NODE_VERSION} && \
-    nvm use v${NODE_VERSION} && \
-    nvm alias default v${NODE_VERSION}
+# Install Node.js (exact version)
+RUN curl -fsSL -o node.tar.xz "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.xz" && \
+    tar -xJf node.tar.xz -C /usr/local --strip-components=1 && \
+    rm node.tar.xz && \
+    node --version && \
+    npm --version
 
-# Ajouter nvm au PATH
-ENV NVM_DIR="/root/.nvm"
-ENV PATH="$NVM_DIR/versions/node/v${NODE_VERSION}/bin:$PATH"
-
-# Vérifier l'installation
-RUN node --version && npm --version
+# Install GitHub Copilot CLI
+RUN npm install -g @github/copilot@${COPILOT_CLI_VERSION}
 
 # Install Yarn
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor -o /etc/apt/keyrings/yarn.gpg && \
