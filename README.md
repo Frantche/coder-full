@@ -10,6 +10,8 @@ This Docker image provides a comprehensive development environment with various 
 - **Kubernetes tools**: kubectl, helm, k9s
 - **Hasura CLI** for GraphQL development
 - **Yarn** package manager
+- **GitHub Copilot CLI** for AI-powered command line assistance
+- **PostgreSQL client (psql)** for database interactions
 - And many other development tools
 
 ## Running the Container

@@ -46,3 +46,13 @@ commandTests:
     command: "go"
     args: ["version"]
     expectedOutput: ["go${GO_VERSION}"]
+
+  - name: "Copilot CLI Version"
+    command: "copilot"
+    args: ["--version"]
+    expectedOutput: ["${COPILOT_CLI_VERSION}"]
+
+  - name: "PostgreSQL Client Version"
+    command: "psql"
+    args: ["--version"]
+    expectedOutput: ["psql \\(PostgreSQL\\) 16"]

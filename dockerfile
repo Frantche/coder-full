@@ -34,6 +34,12 @@ ARG KUBECTL_VERSION=1.35.0
 # renovate: datasource=github-releases depName=get-next-version packageName=thenativeweb/get-next-version versioning=semver
 ARG GNV_VERSION=2.7.1
 
+# renovate: datasource=npm depName=@github/copilot packageName=@github/copilot versioning=semver
+ARG COPILOT_CLI_VERSION=0.0.370
+
+# renovate: datasource=apt depName=postgresql-client packageName=postgresql-client versioning=loose
+ARG POSTGRESQL_CLIENT_VERSION=16+257build1.1
+
 # Install dependencies and Docker
 RUN apt-get update && \
     apt-get upgrade -y --no-install-recommends && \
@@ -76,7 +82,8 @@ RUN apt-get update && \
         docker-ce=$DOCKER_CE_VERSION \
         docker-ce-cli=$DOCKER_CE_VERSION \
         docker-buildx-plugin \
-        docker-compose-plugin && \
+        docker-compose-plugin \
+        postgresql-client=$POSTGRESQL_CLIENT_VERSION && \
     ln -s /usr/libexec/docker/cli-plugins/docker-compose /usr/bin/docker-compose && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -125,6 +132,9 @@ ENV PATH="$NVM_DIR/versions/node/v${NODE_VERSION}/bin:$PATH"
 
 # Vérifier l'installation
 RUN node --version && npm --version
+
+# Install GitHub Copilot CLI
+RUN npm install -g @github/copilot@${COPILOT_CLI_VERSION}
 
 # Install Yarn
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor -o /etc/apt/keyrings/yarn.gpg && \
