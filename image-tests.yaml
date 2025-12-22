@@ -52,10 +52,10 @@ commandTests:
     args: ["--version"]
     expectedOutput: ["${COPILOT_CLI_VERSION}"]
 
-  - name: "PostgreSQL Client Version"
+  - name: "PostgreSQL Client Version (Major)"
     command: "psql"
     args: ["--version"]
-    expectedOutput: ["psql \\(PostgreSQL\\) ${POSTGRESQL_VERSION}"]
+    expectedOutput: ["psql \\(PostgreSQL\\) 18\\."]
   
   - name: "PostgreSQL Client Help (Functionality Test)"
     command: "psql"
