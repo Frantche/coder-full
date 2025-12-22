@@ -55,7 +55,7 @@ commandTests:
   - name: "PostgreSQL Client Version"
     command: "psql"
     args: ["--version"]
-    expectedOutput: ["psql \\(PostgreSQL\\) [0-9]+"]
+    expectedOutput: ["psql \\(PostgreSQL\\) ${POSTGRESQL_VERSION}"]
   
   - name: "PostgreSQL Client Help (Functionality Test)"
     command: "psql"

@@ -11,7 +11,7 @@ This Docker image provides a comprehensive development environment with various 
 - **Hasura CLI** for GraphQL development
 - **Yarn** package manager
 - **GitHub Copilot CLI** for AI-powered command line assistance
-- **PostgreSQL client (psql) version 17** for database interactions
+- **PostgreSQL client (psql) version 18** for database interactions
 - And many other development tools
 
 ## Running the Container

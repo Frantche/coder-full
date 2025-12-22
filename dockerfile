@@ -38,7 +38,7 @@ ARG GNV_VERSION=2.7.1
 ARG COPILOT_CLI_VERSION=0.0.372
 
 # renovate: datasource=github-tags depName=postgresql packageName=postgres/postgres versioning=semver
-ARG POSTGRESQL_VERSION=17.2
+ARG POSTGRESQL_VERSION=18.1
 
 # Install dependencies and Docker
 RUN apt-get update && \
