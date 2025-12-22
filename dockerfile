@@ -124,11 +124,10 @@ ENV LC_ALL=en_US.UTF-8
 RUN curl -L -o /usr/local/bin/hasura "https://github.com/hasura/graphql-engine/releases/download/v${HASURA_CLI_VERSION}/cli-hasura-linux-amd64" && \
     chmod +x /usr/local/bin/hasura
 
-# Install Node.js from NodeSource
-RUN curl -fsSL https://deb.nodesource.com/setup_$(echo ${NODE_VERSION} | cut -d. -f1).x | bash - && \
-    apt-get install -y --no-install-recommends nodejs && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
+# Install Node.js (exact version)
+RUN curl -fsSL -o node.tar.xz "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.xz" && \
+    tar -xJf node.tar.xz -C /usr/local --strip-components=1 && \
+    rm node.tar.xz && \
     node --version && \
     npm --version
 
