@@ -37,7 +37,7 @@ ARG GNV_VERSION=2.7.1
 # renovate: datasource=npm depName=@github/copilot packageName=@github/copilot versioning=semver
 ARG COPILOT_CLI_VERSION=0.0.372
 
-# renovate: datasource=github-releases depName=postgresql packageName=postgres/postgres versioning=semver
+# renovate: datasource=github-tags depName=postgresql packageName=postgres/postgres versioning=semver
 ARG POSTGRESQL_VERSION=17.2
 
 # Install dependencies and Docker
@@ -89,7 +89,6 @@ RUN apt-get update && \
 
 # Install PostgreSQL client from official PostgreSQL repository
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends curl ca-certificates && \
     install -d /usr/share/postgresql-common/pgdg && \
     curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc --fail https://www.postgresql.org/media/keys/ACCC4CF8.asc && \
     echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
