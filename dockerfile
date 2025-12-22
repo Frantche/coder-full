@@ -13,9 +13,6 @@ ARG HASURA_CLI_VERSION=2.48.6
 # renovate: datasource=github-releases depName=node packageName=nodejs/node versioning=semver
 ARG NODE_VERSION=25.2.1
 
-# renovate: datasource=github-releases depName=nvm packageName=nvm-sh/nvm versioning=semver
-ARG NVM_VERSION=0.40.3
-
 # renovate: datasource=github-releases depName=yarn packageName=yarnpkg/yarn versioning=semver
 ARG YARN_VERSION=1.22.22
 
@@ -127,20 +124,13 @@ ENV LC_ALL=en_US.UTF-8
 RUN curl -L -o /usr/local/bin/hasura "https://github.com/hasura/graphql-engine/releases/download/v${HASURA_CLI_VERSION}/cli-hasura-linux-amd64" && \
     chmod +x /usr/local/bin/hasura
 
-# Installer nvm et Node.js
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v${NVM_VERSION}/install.sh | bash && \
-    export NVM_DIR="/root/.nvm" && \
-    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" && \
-    nvm install v${NODE_VERSION} && \
-    nvm use v${NODE_VERSION} && \
-    nvm alias default v${NODE_VERSION}
-
-# Ajouter nvm au PATH
-ENV NVM_DIR="/root/.nvm"
-ENV PATH="$NVM_DIR/versions/node/v${NODE_VERSION}/bin:$PATH"
-
-# Vérifier l'installation
-RUN node --version && npm --version
+# Install Node.js from NodeSource
+RUN curl -fsSL https://deb.nodesource.com/setup_$(echo ${NODE_VERSION} | cut -d. -f1).x | bash - && \
+    apt-get install -y --no-install-recommends nodejs && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    node --version && \
+    npm --version
 
 # Install GitHub Copilot CLI
 RUN npm install -g @github/copilot@${COPILOT_CLI_VERSION}
