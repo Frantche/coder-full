@@ -32,7 +32,7 @@ ARG KUBECTL_VERSION=1.35.0
 ARG GNV_VERSION=2.7.1
 
 # renovate: datasource=npm depName=@github/copilot packageName=@github/copilot versioning=semver
-ARG COPILOT_CLI_VERSION=0.0.372
+ARG COPILOT_CLI_VERSION=0.0.373
 
 # renovate: datasource=github-tags depName=postgresql packageName=postgres/postgres versioning=semver
 ARG POSTGRESQL_VERSION=18.1
