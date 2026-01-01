@@ -58,27 +58,31 @@ EOF
 echo ""
 echo "Test 1: Basic pattern search"
 echo "------------------------------"
-if rg "hello" project/ --no-heading | grep -q "hello"; then
-    echo "✓ PASS: Found 'hello' pattern"
+RESULT=$(rg "hello" project/ --no-heading)
+if echo "$RESULT" | grep -q "helloWorld\|helloUniverse"; then
+    echo "✓ PASS: Found 'hello' pattern in expected functions"
 else
     echo "✗ FAIL: Could not find 'hello' pattern"
+    echo "Output: $RESULT"
     exit 1
 fi
 
 echo ""
 echo "Test 2: Case-insensitive search"
 echo "--------------------------------"
-if rg -i "HELLO" project/ --no-heading | grep -q -i "hello"; then
+RESULT=$(rg -i "HELLO" project/ --no-heading)
+if echo "$RESULT" | grep -q "helloWorld"; then
     echo "✓ PASS: Case-insensitive search works"
 else
     echo "✗ FAIL: Case-insensitive search failed"
+    echo "Output: $RESULT"
     exit 1
 fi
 
 echo ""
 echo "Test 3: File type filtering"
 echo "----------------------------"
-JS_COUNT=$(rg -t js "function" project/ --no-heading | wc -l)
+JS_COUNT=$(rg -t js "function" project/ --count | awk -F: '{sum+=$2} END {print sum}')
 if [ "$JS_COUNT" -ge 4 ]; then
     echo "✓ PASS: Found $JS_COUNT function declarations in JavaScript files"
 else
@@ -100,10 +104,12 @@ echo ""
 echo "Test 5: Whole word search"
 echo "-------------------------"
 # Search for whole word "helper" (should match) but not partial matches
-if rg -w "helper" project/ --no-heading | grep -q "helper"; then
+RESULT=$(rg -w "helper" project/ --no-heading)
+if echo "$RESULT" | grep -q "helperFunction\|anotherHelper"; then
     echo "✓ PASS: Whole word search works"
 else
     echo "✗ FAIL: Whole word search failed"
+    echo "Output: $RESULT"
     exit 1
 fi
 
