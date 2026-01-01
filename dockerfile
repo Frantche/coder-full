@@ -34,6 +34,12 @@ ARG GNV_VERSION=2.7.1
 # renovate: datasource=npm depName=@github/copilot packageName=@github/copilot versioning=semver
 ARG COPILOT_CLI_VERSION=0.0.373
 
+# renovate: datasource=npm depName=opencode-ai packageName=opencode-ai versioning=semver
+ARG OPENCODE_AI_VERSION=1.0.223
+
+# renovate: datasource=npm depName=@fission-ai/openspec packageName=@fission-ai/openspec versioning=semver
+ARG OPENSPEC_VERSION=0.17.2
+
 # renovate: datasource=github-tags depName=postgresql packageName=postgres/postgres versioning=semver
 ARG POSTGRESQL_VERSION=18.1
 
@@ -133,6 +139,10 @@ RUN curl -fsSL -o node.tar.xz "https://nodejs.org/dist/v${NODE_VERSION}/node-v${
 
 # Install GitHub Copilot CLI
 RUN npm install -g @github/copilot@${COPILOT_CLI_VERSION}
+
+# Install opencode-ai and openspec
+RUN npm install -g opencode-ai@${OPENCODE_AI_VERSION} && \
+    npm install -g @fission-ai/openspec@${OPENSPEC_VERSION}
 
 # Install Yarn
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor -o /etc/apt/keyrings/yarn.gpg && \
