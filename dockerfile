@@ -134,6 +134,10 @@ RUN curl -fsSL -o node.tar.xz "https://nodejs.org/dist/v${NODE_VERSION}/node-v${
 # Install GitHub Copilot CLI
 RUN npm install -g @github/copilot@${COPILOT_CLI_VERSION}
 
+# Install opencode-ai and openspec
+RUN npm install -g opencode-ai && \
+    npm install -g @fission-ai/openspec@latest
+
 # Install Yarn
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor -o /etc/apt/keyrings/yarn.gpg && \
     echo "deb [signed-by=/etc/apt/keyrings/yarn.gpg] https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
