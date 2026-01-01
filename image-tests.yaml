@@ -71,3 +71,13 @@ commandTests:
     command: "openspec"
     args: ["--help"]
     expectedOutput: ["Usage:"]
+
+  - name: "Ripgrep Version"
+    command: "rg"
+    args: ["--version"]
+    expectedOutput: ["ripgrep ${RIPGREP_VERSION}"]
+  
+  - name: "Ripgrep Help Test"
+    command: "rg"
+    args: ["--help"]
+    expectedOutput: ["USAGE:"]
