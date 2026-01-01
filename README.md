@@ -93,6 +93,35 @@ rg "old_pattern" --replace "new_pattern"
 
 For more information, run `rg --help` or visit [ripgrep documentation](https://github.com/BurntSushi/ripgrep).
 
+## Testing
+
+This project includes comprehensive tests to verify all installed tools work correctly:
+
+### Container Structure Tests
+
+Located in `image-tests.yaml`, these tests verify that all tools are installed with the correct versions and basic functionality. Tests run automatically in CI/CD for every pull request and push to main.
+
+### Functional Tests
+
+**ripgrep Functional Test** (`test-ripgrep.sh`):
+- Located at `/usr/local/bin/test-ripgrep.sh` inside the container
+- Comprehensive test suite covering all major ripgrep features
+- Tests include: basic search, case-insensitive search, file type filtering, regex patterns, and more
+- Run manually inside the container: `test-ripgrep.sh`
+
+To run tests locally:
+
+```bash
+# Build the image
+docker build -t coder-full:test -f dockerfile .
+
+# Run container structure tests (requires container-structure-test)
+container-structure-test test --image coder-full:test --config image-tests-rendered.yaml
+
+# Run ripgrep functional tests
+docker run --rm coder-full:test /usr/local/bin/test-ripgrep.sh
+```
+
 ## Testing Note
 
 The automated container structure tests verify that the Docker CLI is installed and properly configured. Since these tests run without privileged mode (by design), they expect the Docker daemon connection to fail, which is normal and correct behavior. When you run the container with `--privileged` flag, Docker will work correctly.

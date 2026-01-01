@@ -195,6 +195,10 @@ RUN userdel -r ubuntu && \
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
+# Copy test scripts
+COPY test-ripgrep.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/test-ripgrep.sh
+
 # Switch to non-root user
 USER coder
 
