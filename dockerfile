@@ -43,6 +43,9 @@ ARG OPENSPEC_VERSION=0.17.2
 # renovate: datasource=github-tags depName=postgresql packageName=postgres/postgres versioning=semver
 ARG POSTGRESQL_VERSION=18.1
 
+# renovate: datasource=github-releases depName=ripgrep packageName=BurntSushi/ripgrep versioning=semver
+ARG RIPGREP_VERSION=14.1.1
+
 # Install dependencies and Docker
 RUN apt-get update && \
     apt-get upgrade -y --no-install-recommends && \
@@ -120,6 +123,12 @@ RUN curl -LO "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kube
 RUN curl -L -o get-next-version https://github.com/thenativeweb/get-next-version/releases/download/${GNV_VERSION}/get-next-version-linux-amd64 && \
     install -o root -g root -m 0755 get-next-version /usr/local/bin/get-next-version && \
     rm get-next-version
+
+# Install ripgrep
+RUN curl -L -o ripgrep.tar.gz "https://github.com/BurntSushi/ripgrep/releases/download/${RIPGREP_VERSION}/ripgrep-${RIPGREP_VERSION}-x86_64-unknown-linux-musl.tar.gz" && \
+    tar -xzf ripgrep.tar.gz && \
+    install -o root -g root -m 0755 "ripgrep-${RIPGREP_VERSION}-x86_64-unknown-linux-musl/rg" /usr/local/bin/rg && \
+    rm -rf ripgrep.tar.gz "ripgrep-${RIPGREP_VERSION}-x86_64-unknown-linux-musl"
 
 # Locale settings
 ENV LANG=en_US.UTF-8
