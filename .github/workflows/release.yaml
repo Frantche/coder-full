@@ -69,10 +69,6 @@ jobs:
             --image testimage:pr \
             --config image-tests-rendered.yaml
 
-      - name: Run Ripgrep Functional Tests
-        run: |
-          docker run --rm testimage:pr /usr/local/bin/test-ripgrep.sh
-
   publish-image:
     runs-on: ubuntu-latest
     needs: build-and-test

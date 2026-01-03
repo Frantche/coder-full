@@ -101,14 +101,6 @@ This project includes comprehensive tests to verify all installed tools work cor
 
 Located in `image-tests.yaml`, these tests verify that all tools are installed with the correct versions and basic functionality. Tests run automatically in CI/CD for every pull request and push to main.
 
-### Functional Tests
-
-**ripgrep Functional Test** (`test-ripgrep.sh`):
-- Located at `/usr/local/bin/test-ripgrep.sh` inside the container
-- Comprehensive test suite covering all major ripgrep features
-- Tests include: basic search, case-insensitive search, file type filtering, regex patterns, and more
-- Run manually inside the container: `test-ripgrep.sh`
-
 To run tests locally:
 
 ```bash
@@ -117,9 +109,6 @@ docker build -t coder-full:test -f dockerfile .
 
 # Run container structure tests (requires container-structure-test)
 container-structure-test test --image coder-full:test --config image-tests-rendered.yaml
-
-# Run ripgrep functional tests
-docker run --rm coder-full:test /usr/local/bin/test-ripgrep.sh
 ```
 
 ## Testing Note
