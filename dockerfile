@@ -44,7 +44,7 @@ ARG OPENSPEC_VERSION=0.17.2
 ARG POSTGRESQL_VERSION=18.1
 
 # renovate: datasource=github-releases depName=ripgrep packageName=BurntSushi/ripgrep versioning=semver
-ARG RIPGREP_VERSION=14.1.1
+ARG RIPGREP_VERSION=15.1.0
 
 # Install dependencies and Docker
 RUN apt-get update && \
