@@ -35,7 +35,7 @@ ARG GNV_VERSION=2.7.1
 ARG COPILOT_CLI_VERSION=0.0.374
 
 # renovate: datasource=npm depName=opencode-ai packageName=opencode-ai versioning=semver
-ARG OPENCODE_AI_VERSION=1.1.1
+ARG OPENCODE_AI_VERSION=1.1.2
 
 # renovate: datasource=npm depName=@fission-ai/openspec packageName=@fission-ai/openspec versioning=semver
 ARG OPENSPEC_VERSION=0.17.2
