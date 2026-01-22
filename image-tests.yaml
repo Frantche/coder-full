@@ -81,3 +81,13 @@ commandTests:
     command: "rg"
     args: ["--help"]
     expectedOutput: ["USAGE:"]
+
+  - name: "Tilt Version"
+    command: "tilt"
+    args: ["version"]
+    expectedOutput: ["v${TILT_VERSION}"]
+  
+  - name: "Tilt Help Test"
+    command: "tilt"
+    args: ["--help"]
+    expectedOutput: ["Usage:"]
