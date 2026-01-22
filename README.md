@@ -105,7 +105,7 @@ Tilt is a modern dev tool that enables fast, iterative development for Kubernete
 tilt up
 
 # Start Tilt in the background
-tilt up -- --stream=false
+tilt up --stream=false
 
 # Check the status of running resources
 tilt get all
