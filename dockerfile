@@ -46,6 +46,9 @@ ARG POSTGRESQL_VERSION=18.1
 # renovate: datasource=github-releases depName=ripgrep packageName=BurntSushi/ripgrep versioning=semver
 ARG RIPGREP_VERSION=15.1.0
 
+# renovate: datasource=github-releases depName=tilt packageName=tilt-dev/tilt versioning=semver
+ARG TILT_VERSION=0.36.1
+
 # Install dependencies and Docker
 RUN apt-get update && \
     apt-get upgrade -y --no-install-recommends && \
@@ -129,6 +132,12 @@ RUN curl -L -o ripgrep.tar.gz "https://github.com/BurntSushi/ripgrep/releases/do
     tar -xzf ripgrep.tar.gz && \
     install -o root -g root -m 0755 "ripgrep-${RIPGREP_VERSION}-x86_64-unknown-linux-musl/rg" /usr/local/bin/rg && \
     rm -rf ripgrep.tar.gz "ripgrep-${RIPGREP_VERSION}-x86_64-unknown-linux-musl"
+
+# Install Tilt
+RUN curl -fsSL -o tilt.tar.gz "https://github.com/tilt-dev/tilt/releases/download/v${TILT_VERSION}/tilt.${TILT_VERSION}.linux.x86_64.tar.gz" && \
+    tar -xzf tilt.tar.gz && \
+    install -o root -g root -m 0755 tilt /usr/local/bin/tilt && \
+    rm -rf tilt.tar.gz tilt
 
 # Locale settings
 ENV LANG=en_US.UTF-8
