@@ -162,13 +162,10 @@ RUN npm install -g @github/copilot@${COPILOT_CLI_VERSION}
 RUN npm install -g opencode-ai@${OPENCODE_AI_VERSION} && \
     npm install -g @fission-ai/openspec@${OPENSPEC_VERSION}
 
-# Install Yarn
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor -o /etc/apt/keyrings/yarn.gpg && \
-    echo "deb [signed-by=/etc/apt/keyrings/yarn.gpg] https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
-    apt-get update && \
-    apt-get install -y yarn=${YARN_VERSION}-1 && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+# Install Yarn via Corepack (included with Node.js 16.10+)
+RUN corepack enable && \
+    corepack prepare yarn@${YARN_VERSION} --activate && \
+    yarn --version
 
 # Install Go
 RUN curl -L -o go${GO_VERSION}.linux-amd64.tar.gz "https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz" && \
