@@ -13,7 +13,7 @@ ARG HASURA_CLI_VERSION=2.48.10
 # renovate: datasource=github-releases depName=node packageName=nodejs/node versioning=semver
 ARG NODE_VERSION=25.4.0
 
-# renovate: datasource=npm depName=yarn packageName=yarn versioning=semver
+# renovate: datasource=npm depName=yarn versioning=semver
 ARG YARN_VERSION=1.22.22
 
 # renovate: datasource=github-releases depName=go packageName=golang/go versioning=semver
