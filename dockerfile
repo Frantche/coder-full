@@ -46,6 +46,9 @@ ARG POSTGRESQL_VERSION=18.1
 # renovate: datasource=github-releases depName=ripgrep packageName=BurntSushi/ripgrep versioning=semver
 ARG RIPGREP_VERSION=15.1.0
 
+# renovate: datasource=github-releases depName=tilt packageName=tilt-dev/tilt versioning=semver
+ARG TILT_VERSION=0.36.1
+
 # Install dependencies and Docker
 RUN apt-get update && \
     apt-get upgrade -y --no-install-recommends && \
@@ -130,6 +133,12 @@ RUN curl -L -o ripgrep.tar.gz "https://github.com/BurntSushi/ripgrep/releases/do
     install -o root -g root -m 0755 "ripgrep-${RIPGREP_VERSION}-x86_64-unknown-linux-musl/rg" /usr/local/bin/rg && \
     rm -rf ripgrep.tar.gz "ripgrep-${RIPGREP_VERSION}-x86_64-unknown-linux-musl"
 
+# Install Tilt
+RUN curl -fsSL -o tilt.tar.gz "https://github.com/tilt-dev/tilt/releases/download/v${TILT_VERSION}/tilt.${TILT_VERSION}.linux.x86_64.tar.gz" && \
+    tar -xzf tilt.tar.gz && \
+    install -o root -g root -m 0755 tilt /usr/local/bin/tilt && \
+    rm -rf tilt.tar.gz tilt
+
 # Locale settings
 ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US.UTF-8
@@ -153,13 +162,10 @@ RUN npm install -g @github/copilot@${COPILOT_CLI_VERSION}
 RUN npm install -g opencode-ai@${OPENCODE_AI_VERSION} && \
     npm install -g @fission-ai/openspec@${OPENSPEC_VERSION}
 
-# Install Yarn
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor -o /etc/apt/keyrings/yarn.gpg && \
-    echo "deb [signed-by=/etc/apt/keyrings/yarn.gpg] https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
-    apt-get update && \
-    apt-get install -y yarn=${YARN_VERSION}-1 && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+# Install Yarn via Corepack (included with Node.js 16.10+)
+RUN corepack enable && \
+    corepack prepare yarn@${YARN_VERSION} --activate && \
+    yarn --version
 
 # Install Go
 RUN curl -L -o go${GO_VERSION}.linux-amd64.tar.gz "https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz" && \

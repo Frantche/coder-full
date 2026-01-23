@@ -8,6 +8,7 @@ This Docker image provides a comprehensive development environment with various 
 - **Node.js** with NVM for version management
 - **Go** programming language
 - **Kubernetes tools**: kubectl, helm, k9s
+- **Tilt** for local Kubernetes development and live updates
 - **Hasura CLI** for GraphQL development
 - **Yarn** package manager
 - **GitHub Copilot CLI** for AI-powered command line assistance
@@ -93,6 +94,34 @@ rg "old_pattern" --replace "new_pattern"
 
 For more information, run `rg --help` or visit [ripgrep documentation](https://github.com/BurntSushi/ripgrep).
 
+### Tilt
+
+Tilt is a modern dev tool that enables fast, iterative development for Kubernetes and Docker Compose applications. It automates the workflow of building, deploying, and monitoring your app as you make changes.
+
+**Basic Usage:**
+
+```bash
+# Start Tilt in your project directory (requires a Tiltfile)
+tilt up
+
+# Start Tilt in the background
+tilt up --stream=false
+
+# Check the status of running resources
+tilt get all
+
+# View logs for a specific resource
+tilt logs <resource-name>
+
+# Stop Tilt and clean up resources
+tilt down
+
+# Check Tilt version
+tilt version
+```
+
+For more information, run `tilt --help` or visit [Tilt documentation](https://docs.tilt.dev/).
+
 ## Testing
 
 This project includes comprehensive tests to verify all installed tools work correctly:
@@ -134,6 +163,7 @@ Renovate monitors and creates PRs for updates to:
 - Node.js
 - Go
 - Kubernetes tools (kubectl, helm, k9s)
+- Tilt
 - Hasura CLI
 - PostgreSQL client
 - ripgrep
