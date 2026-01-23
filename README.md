@@ -167,7 +167,7 @@ Renovate monitors and creates PRs for updates to:
 - Hasura CLI
 - PostgreSQL client
 - ripgrep
-- npm packages (GitHub Copilot CLI, opencode-ai, openspec)
+- npm packages (Yarn, GitHub Copilot CLI, opencode-ai, openspec)
 - And other tools with version ARGs in the Dockerfile
 
 All tools with `# renovate:` comments in the Dockerfile are automatically tracked for updates.
