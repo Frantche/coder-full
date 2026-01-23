@@ -13,7 +13,7 @@ ARG HASURA_CLI_VERSION=2.48.10
 # renovate: datasource=github-releases depName=node packageName=nodejs/node versioning=semver
 ARG NODE_VERSION=25.4.0
 
-# renovate: datasource=github-releases depName=yarn packageName=yarnpkg/yarn versioning=semver
+# renovate: datasource=npm depName=yarn packageName=yarn versioning=semver
 ARG YARN_VERSION=1.22.22
 
 # renovate: datasource=github-releases depName=go packageName=golang/go versioning=semver
@@ -162,9 +162,8 @@ RUN npm install -g @github/copilot@${COPILOT_CLI_VERSION}
 RUN npm install -g opencode-ai@${OPENCODE_AI_VERSION} && \
     npm install -g @fission-ai/openspec@${OPENSPEC_VERSION}
 
-# Install Yarn via Corepack (included with Node.js 16.10+)
-RUN corepack enable && \
-    corepack prepare yarn@${YARN_VERSION} --activate && \
+# Install Yarn globally via npm
+RUN npm install --global yarn@${YARN_VERSION} && \
     yarn --version
 
 # Install Go
