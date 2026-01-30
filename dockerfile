@@ -47,7 +47,7 @@ ARG POSTGRESQL_VERSION=18.1
 ARG RIPGREP_VERSION=15.1.0
 
 # renovate: datasource=github-releases depName=tilt packageName=tilt-dev/tilt versioning=semver
-ARG TILT_VERSION=0.36.1
+ARG TILT_VERSION=0.36.3
 
 # Install dependencies and Docker
 RUN apt-get update && \
