@@ -26,7 +26,7 @@ ARG K9S_VERSION=0.50.18
 ARG HELM_VERSION=4.1.1
 
 # renovate: datasource=github-tags depName=kubernetes packageName=kubernetes/kubernetes versioning=semver
-ARG KUBECTL_VERSION=1.35.0
+ARG KUBECTL_VERSION=1.35.1
 
 # renovate: datasource=github-releases depName=get-next-version packageName=thenativeweb/get-next-version versioning=semver
 ARG GNV_VERSION=2.7.1
