@@ -106,3 +106,9 @@ commandTests:
     command: "jupyter"
     args: ["notebook", "--version"]
     expectedOutput: ["${NOTEBOOK_VERSION}"]
+
+  - name: "kind Version"
+    command: "kind"
+    args: ["version"]
+    expectedOutput: ["kind v${KIND_VERSION}"]
+

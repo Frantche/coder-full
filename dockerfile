@@ -57,6 +57,8 @@ ARG JUPYTER_CORE_VERSION=5.9.1
 
 # renovate: datasource=pypi depName=notebook versioning=semver
 ARG NOTEBOOK_VERSION=7.5.4
+# renovate: datasource=github-releases depName=kind packageName=kubernetes-sigs/kind versioning=semver
+ARG KIND_VERSION=0.31.0
 
 # Install dependencies and Docker
 RUN apt-get update && \
@@ -150,6 +152,11 @@ RUN curl -fsSL -o tilt.tar.gz "https://github.com/tilt-dev/tilt/releases/downloa
 
 # Install JupyterLab
 RUN pip3 install --break-system-packages jupyterlab==${JUPYTERLAB_VERSION} jupyter-core==${JUPYTER_CORE_VERSION} notebook==${NOTEBOOK_VERSION}
+
+# Install kind
+RUN curl -fsSL -o kind "https://github.com/kubernetes-sigs/kind/releases/download/v${KIND_VERSION}/kind-linux-amd64" && \
+    install -o root -g root -m 0755 kind /usr/local/bin/kind && \
+    rm kind
 
 # Locale settings
 ENV LANG=en_US.UTF-8
