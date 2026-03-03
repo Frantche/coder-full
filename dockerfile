@@ -49,6 +49,15 @@ ARG RIPGREP_VERSION=15.1.0
 # renovate: datasource=github-releases depName=tilt packageName=tilt-dev/tilt versioning=semver
 ARG TILT_VERSION=0.36.3
 
+# renovate: datasource=pypi depName=jupyterlab versioning=semver
+ARG JUPYTERLAB_VERSION=4.5.5
+
+# renovate: datasource=pypi depName=jupyter-core versioning=semver
+ARG JUPYTER_CORE_VERSION=5.9.1
+
+# renovate: datasource=pypi depName=notebook versioning=semver
+ARG NOTEBOOK_VERSION=7.5.4
+
 # Install dependencies and Docker
 RUN apt-get update && \
     apt-get upgrade -y --no-install-recommends && \
@@ -138,6 +147,9 @@ RUN curl -fsSL -o tilt.tar.gz "https://github.com/tilt-dev/tilt/releases/downloa
     tar -xzf tilt.tar.gz && \
     install -o root -g root -m 0755 tilt /usr/local/bin/tilt && \
     rm -rf tilt.tar.gz tilt
+
+# Install JupyterLab
+RUN pip3 install --break-system-packages jupyterlab==${JUPYTERLAB_VERSION} jupyter-core==${JUPYTER_CORE_VERSION} notebook==${NOTEBOOK_VERSION}
 
 # Locale settings
 ENV LANG=en_US.UTF-8

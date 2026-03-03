@@ -91,3 +91,23 @@ commandTests:
     command: "tilt"
     args: ["--help"]
     expectedOutput: ["Usage:"]
+
+  - name: "JupyterLab Version"
+    command: "jupyter"
+    args: ["lab", "--version"]
+    expectedOutput: ["${JUPYTERLAB_VERSION}"]
+
+  - name: "JupyterLab Help Test"
+    command: "jupyter"
+    args: ["lab", "--help"]
+    expectedOutput: ["JupyterLab"]
+
+  - name: "Jupyter Core Version"
+    command: "jupyter"
+    args: ["--version"]
+    expectedOutput: ["jupyter_core\s*:\s*${JUPYTER_CORE_VERSION}"]
+
+  - name: "Notebook Version"
+    command: "jupyter"
+    args: ["notebook", "--version"]
+    expectedOutput: ["${NOTEBOOK_VERSION}"]
