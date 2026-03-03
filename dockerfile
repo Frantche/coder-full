@@ -49,6 +49,9 @@ ARG RIPGREP_VERSION=15.1.0
 # renovate: datasource=github-releases depName=tilt packageName=tilt-dev/tilt versioning=semver
 ARG TILT_VERSION=0.36.3
 
+# renovate: datasource=github-releases depName=kind packageName=kubernetes-sigs/kind versioning=semver
+ARG KIND_VERSION=0.31.0
+
 # Install dependencies and Docker
 RUN apt-get update && \
     apt-get upgrade -y --no-install-recommends && \
@@ -138,6 +141,11 @@ RUN curl -fsSL -o tilt.tar.gz "https://github.com/tilt-dev/tilt/releases/downloa
     tar -xzf tilt.tar.gz && \
     install -o root -g root -m 0755 tilt /usr/local/bin/tilt && \
     rm -rf tilt.tar.gz tilt
+
+# Install kind
+RUN curl -fsSL -o kind "https://github.com/kubernetes-sigs/kind/releases/download/v${KIND_VERSION}/kind-linux-amd64" && \
+    install -o root -g root -m 0755 kind /usr/local/bin/kind && \
+    rm kind
 
 # Locale settings
 ENV LANG=en_US.UTF-8
