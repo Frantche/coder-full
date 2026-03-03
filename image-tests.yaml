@@ -91,3 +91,9 @@ commandTests:
     command: "tilt"
     args: ["--help"]
     expectedOutput: ["Usage:"]
+
+  - name: "kind Version"
+    command: "kind"
+    args: ["version"]
+    expectedOutput: ["kind v${KIND_VERSION}"]
+
