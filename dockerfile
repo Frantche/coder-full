@@ -49,6 +49,14 @@ ARG RIPGREP_VERSION=15.1.0
 # renovate: datasource=github-releases depName=tilt packageName=tilt-dev/tilt versioning=semver
 ARG TILT_VERSION=0.36.3
 
+# renovate: datasource=pypi depName=jupyterlab versioning=semver
+ARG JUPYTERLAB_VERSION=4.5.5
+
+# renovate: datasource=pypi depName=jupyter-core versioning=semver
+ARG JUPYTER_CORE_VERSION=5.9.1
+
+# renovate: datasource=pypi depName=notebook versioning=semver
+ARG NOTEBOOK_VERSION=7.5.4
 # renovate: datasource=github-releases depName=kind packageName=kubernetes-sigs/kind versioning=semver
 ARG KIND_VERSION=0.31.0
 
@@ -141,6 +149,9 @@ RUN curl -fsSL -o tilt.tar.gz "https://github.com/tilt-dev/tilt/releases/downloa
     tar -xzf tilt.tar.gz && \
     install -o root -g root -m 0755 tilt /usr/local/bin/tilt && \
     rm -rf tilt.tar.gz tilt
+
+# Install JupyterLab
+RUN pip3 install --break-system-packages jupyterlab==${JUPYTERLAB_VERSION} jupyter-core==${JUPYTER_CORE_VERSION} notebook==${NOTEBOOK_VERSION}
 
 # Install kind
 RUN curl -fsSL -o kind "https://github.com/kubernetes-sigs/kind/releases/download/v${KIND_VERSION}/kind-linux-amd64" && \

@@ -92,6 +92,21 @@ commandTests:
     args: ["--help"]
     expectedOutput: ["Usage:"]
 
+  - name: "JupyterLab Version"
+    command: "jupyter"
+    args: ["lab", "--version"]
+    expectedOutput: ["${JUPYTERLAB_VERSION}"]
+  
+  # - name: "Jupyter Core Version"
+  #   command: "jupyter"
+  #   args: ["--version"]
+  #   expectedOutput: ["${JUPYTER_CORE_VERSION}"]
+
+  - name: "Notebook Version"
+    command: "jupyter"
+    args: ["notebook", "--version"]
+    expectedOutput: ["${NOTEBOOK_VERSION}"]
+
   - name: "kind Version"
     command: "kind"
     args: ["version"]
