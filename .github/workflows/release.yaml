@@ -54,7 +54,7 @@ jobs:
           envsubst < image-tests.yaml > image-tests-rendered.yaml
 
       - name: Build Docker Image (for PR test)
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           push: false
@@ -115,7 +115,7 @@ jobs:
           git push origin "$VERSION"
 
       - name: Build and push Docker Image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           push: true
