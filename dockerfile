@@ -60,7 +60,7 @@ ARG NOTEBOOK_VERSION=7.5.4
 # renovate: datasource=github-releases depName=kind packageName=kubernetes-sigs/kind versioning=semver
 ARG KIND_VERSION=0.31.0
 
-# Install dependencies and Docker
+# Install base dependencies, Docker and Cypress runtime libraries
 RUN apt-get update && \
     apt-get upgrade -y --no-install-recommends && \
     apt-get install -y --no-install-recommends \
@@ -86,7 +86,17 @@ RUN apt-get update && \
         vim \
         wget \
         ssh \
-        rsync && \
+        rsync \
+        libgtk2.0-0t64 \
+        libgtk-3-0t64 \
+        libgbm-dev \
+        libnotify-dev \
+        libnss3 \
+        libxss1 \
+        libasound2t64 \
+        libxtst6 \
+        xauth \
+        xvfb && \
     update-ca-certificates && \
     install -m 0755 -d /etc/apt/keyrings && \
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc && \
