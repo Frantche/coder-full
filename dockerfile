@@ -38,7 +38,7 @@ ARG COPILOT_CLI_VERSION=1.0.34
 ARG OPENCODE_AI_VERSION=1.14.19
 
 # renovate: datasource=npm depName=@fission-ai/openspec packageName=@fission-ai/openspec versioning=semver
-ARG OPENSPEC_VERSION=1.3.0
+ARG OPENSPEC_VERSION=1.3.1
 
 # renovate: datasource=github-tags depName=postgresql packageName=postgres/postgres versioning=semver
 ARG POSTGRESQL_VERSION=18.1
