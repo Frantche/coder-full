@@ -1,5 +1,5 @@
 # Base image
-FROM mirror.gcr.io/ubuntu:noble-20260217
+FROM mirror.gcr.io/ubuntu:26.04
 
 SHELL ["/bin/bash", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive
