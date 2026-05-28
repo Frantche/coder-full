@@ -4,7 +4,7 @@ commandTests:
     command: "docker"
     args: ["version", "-f", "{{.Client.Version}}"]
     expectedOutput: ["${DOCKER_VERSION}"]
-    expectedError: [".*Cannot connect to the Docker daemon.*"]
+    expectedError: [".*(Cannot connect to the Docker daemon|failed to connect to the docker API).*"]
     exitCode: 1
 
   - name: "Helm Version"
@@ -63,8 +63,8 @@ commandTests:
     expectedOutput: ["psql is the PostgreSQL interactive terminal"]
 
   - name: "opencode-ai Help Test"
-    command: "opencode"
-    args: ["--help"]
+    command: "bash"
+    args: ["-lc", "opencode --help 2>&1"]
     expectedOutput: ["Commands:"]
 
   - name: "openspec Help Test"
@@ -111,4 +111,3 @@ commandTests:
     command: "kind"
     args: ["version"]
     expectedOutput: ["kind v${KIND_VERSION}"]
-
