@@ -4,7 +4,7 @@ commandTests:
     command: "docker"
     args: ["version", "-f", "{{.Client.Version}}"]
     expectedOutput: ["${DOCKER_VERSION}"]
-    expectedError: ["([Cc]annot connect to the Docker daemon|[Ff]ailed to connect to the [Dd]ocker API)"]
+    expectedError: ["(?i)(cannot connect to the docker daemon|failed to connect to the docker api)"]
     exitCode: 1
 
   - name: "Helm Version"
