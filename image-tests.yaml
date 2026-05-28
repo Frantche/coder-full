@@ -63,9 +63,9 @@ commandTests:
     expectedOutput: ["psql is the PostgreSQL interactive terminal"]
 
   - name: "opencode-ai Help Test"
-    command: "bash"
-    args: ["-lc", "opencode --help 2>&1"]
-    expectedOutput: ["Commands:"]
+    command: "opencode"
+    args: ["--help"]
+    expectedError: ["Commands:"]
 
   - name: "openspec Help Test"
     command: "openspec"
