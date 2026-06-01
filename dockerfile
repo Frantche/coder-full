@@ -11,7 +11,7 @@ ARG DOCKER_CE_VERSION=5:29.5.2-1~ubuntu.26.04~resolute
 ARG HASURA_CLI_VERSION=2.49.0
 
 # renovate: datasource=github-releases depName=node packageName=nodejs/node versioning=semver
-ARG NODE_VERSION=26.2.0
+ARG NODE_VERSION=26.3.0
 
 # renovate: datasource=npm depName=yarn versioning=semver
 ARG YARN_VERSION=1.22.22
