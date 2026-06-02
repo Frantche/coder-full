@@ -58,7 +58,7 @@ ARG JUPYTER_CORE_VERSION=5.9.1
 # renovate: datasource=pypi depName=notebook versioning=semver
 ARG NOTEBOOK_VERSION=7.5.4
 # renovate: datasource=github-releases depName=kind packageName=kubernetes-sigs/kind versioning=semver
-ARG KIND_VERSION=0.31.0
+ARG KIND_VERSION=0.32.0
 
 # Install base dependencies, Docker and Cypress runtime libraries
 RUN apt-get update && \
