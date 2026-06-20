@@ -4,7 +4,7 @@ FROM mirror.gcr.io/ubuntu:26.04
 SHELL ["/bin/bash", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive
 
-# renovate: datasource=apt depName=docker-ce packageName=docker-ce versioning=loose
+# renovate: datasource=deb depName=docker-ce packageName=docker-ce versioning=loose registryUrl=https://download.docker.com/linux/ubuntu resolute stable
 ARG DOCKER_CE_VERSION=5:29.5.2-1~ubuntu.26.04~resolute
 
 # renovate: datasource=github-releases depName=graphql-engine packageName=hasura/graphql-engine versioning=semver
