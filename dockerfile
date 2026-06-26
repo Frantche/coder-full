@@ -5,7 +5,7 @@ SHELL ["/bin/bash", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive
 
 # renovate: datasource=deb depName=docker-ce packageName=docker-ce versioning=deb registryUrl=https://download.docker.com/linux/ubuntu?suite=resolute&components=stable&binaryArch=amd64
-ARG DOCKER_CE_VERSION=5:29.6.0-1~ubuntu.26.04~resolute
+ARG DOCKER_CE_VERSION=5:29.6.1-1~ubuntu.26.04~resolute
 
 # renovate: datasource=github-releases depName=graphql-engine packageName=hasura/graphql-engine versioning=semver
 ARG HASURA_CLI_VERSION=2.49.3
