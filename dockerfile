@@ -29,7 +29,7 @@ ARG HELM_VERSION=4.2.3
 ARG KUBECTL_VERSION=1.36.3
 
 # renovate: datasource=github-releases depName=get-next-version packageName=thenativeweb/get-next-version versioning=semver
-ARG GNV_VERSION=2.7.4
+ARG GNV_VERSION=2.7.5
 
 # renovate: datasource=npm depName=@github/copilot packageName=@github/copilot versioning=semver
 ARG COPILOT_CLI_VERSION=1.0.74
