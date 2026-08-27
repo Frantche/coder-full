@@ -32,7 +32,7 @@ ARG KUBECTL_VERSION=1.37.0
 ARG GNV_VERSION=2.7.7
 
 # renovate: datasource=npm depName=@github/copilot packageName=@github/copilot versioning=semver
-ARG COPILOT_CLI_VERSION=1.0.80
+ARG COPILOT_CLI_VERSION=1.0.81
 
 # renovate: datasource=npm depName=opencode-ai packageName=opencode-ai versioning=semver
 ARG OPENCODE_AI_VERSION=1.18.23
