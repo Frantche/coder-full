@@ -8,7 +8,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 ARG DOCKER_CE_VERSION=5:29.9.3-1~ubuntu.26.04~resolute
 
 # renovate: datasource=github-releases depName=graphql-engine packageName=hasura/graphql-engine versioning=semver
-ARG HASURA_CLI_VERSION=2.51.4
+ARG HASURA_CLI_VERSION=2.51.5
 
 # renovate: datasource=github-releases depName=node packageName=nodejs/node versioning=semver
 ARG NODE_VERSION=26.13.0
