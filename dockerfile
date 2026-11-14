@@ -47,7 +47,7 @@ ARG POSTGRESQL_VERSION=18.1
 ARG RIPGREP_VERSION=15.2.0
 
 # renovate: datasource=github-releases depName=tilt packageName=tilt-dev/tilt versioning=semver
-ARG TILT_VERSION=0.37.8
+ARG TILT_VERSION=0.37.9
 
 # renovate: datasource=github-releases depName=kind packageName=kubernetes-sigs/kind versioning=semver
 ARG KIND_VERSION=0.33.0
