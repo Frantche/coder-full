@@ -44,7 +44,7 @@ ARG OPENSPEC_VERSION=2.1.1
 ARG POSTGRESQL_VERSION=18.1
 
 # renovate: datasource=github-releases depName=ripgrep packageName=BurntSushi/ripgrep versioning=semver
-ARG RIPGREP_VERSION=15.2.0
+ARG RIPGREP_VERSION=16.0.0
 
 # renovate: datasource=github-releases depName=tilt packageName=tilt-dev/tilt versioning=semver
 ARG TILT_VERSION=0.37.9
